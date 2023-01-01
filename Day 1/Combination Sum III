@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/combination-sum-iii/description/
+
+class Solution {
+public:
+    void traverse(int k, int n, vector<bool> digit, vector<int> a,
+                    vector<vector<int>>& ans,int s)
+    {
+        if(k==0 && n==0){
+            ans.push_back(a);
+            return;
+        }
+        if(k==0) return;  
+        if(n<=0) return;
+        // cout<<k<<"*"<<n<<endl;
+        for(int i=s;i<=9;i++){
+            if(digit[i]){
+                a.push_back(i);
+                traverse(k-1,n-i,digit,a,ans,i+1);
+                a.pop_back();
+            } 
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        
+        vector<bool> digit(10,true);
+        digit[0]=false;
+        // vector<stack<int>> ans;
+        vector<vector<int>> ans;
+        vector<int> a;
+        traverse(k,n,digit,a,ans,1);
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/combination-sum-iii/submissions/868645387/
