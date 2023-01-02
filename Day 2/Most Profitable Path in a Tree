@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/most-profitable-path-in-a-tree/description/
+
+class Solution {
+public:
+    int t; int ans;
+    void traverse_alice(int a, int b,int r, int income, vector<vector<int>>& adj, vector<int>& amount, vector<int>& visBob)
+    {
+        if(adj[a].size()==1 && a!=0){
+            ans=max(ans,income);
+        }
+        
+        for(auto x:adj[a])
+        {
+            if(x!=b)
+            {   
+                if(r+1>visBob[x] && visBob[x]!=-1)
+                traverse_alice(x,a,r+1,income,adj,amount,visBob);
+                else if(r+1!=visBob[x])
+                traverse_alice(x,a,r+1,income+amount[x],adj,amount,visBob);
+                else{
+                traverse_alice(x,a,r+1,income+(amount[x]/2),adj,amount,visBob);
+                }
+            }
+        }
+    }
+    bool traverse_bob(int a, int b, vector<vector<int>>& adj, vector<int>& visBob, int bob)
+    {
+        if(a==bob) {  return true; }
+        bool c=false;
+        for(int x:adj[a])
+        {
+            bool d=false;
+            if(x!=b){
+            d=traverse_bob(x,a,adj,visBob,bob);
+            }
+
+            c=c|d;
+        }
+        if(c)
+        visBob[a]=t++;
+        return c;
+    }
+    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+        vector<int> s;
+        int n=amount.size();
+        vector<vector<int>> adj(n,s);
+        for(int i=0;i<edges.size();i++)
+        {
+            adj[edges[i][1]].push_back(edges[i][0]);
+            adj[edges[i][0]].push_back(edges[i][1]);
+        }
+        vector<int> visBob(n,-1);
+        visBob[bob]=0;
+        t=1;
+        traverse_bob(0,-1,adj,visBob,bob);
+        ans=INT_MIN;
+        traverse_alice(0,-1,0,amount[0],adj,amount,visBob);
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/most-profitable-path-in-a-tree/submissions/869896830/
