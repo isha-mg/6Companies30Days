@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/perfect-rectangle/description/
+
+class Solution {
+public:
+    bool isRectangleCover(vector<vector<int>>& rec) {
+        
+        int n=rec.size();
+
+        if (n == 1) return true;
+        map<pair<int,int>,int> m;
+
+        for(int i=0;i<n;i++)
+        {
+            m[{rec[i][0], rec[i][1]}]++;
+            m[{rec[i][2], rec[i][3]}]++;
+            m[{rec[i][0], rec[i][3]}]--;
+            m[{rec[i][2], rec[i][1]}]--;
+        }
+        int ans=0;
+        for(auto x:m)
+        {
+            if(x.second!=0){
+                if(x.second!=1 && x.second!=-1)
+                return false;
+                ans++;
+            }
+        }
+        return ans==4;
+    }
+};
+
+//https://leetcode.com/problems/perfect-rectangle/submissions/870608973/
