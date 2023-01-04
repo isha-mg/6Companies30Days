@@ -1,0 +1,36 @@
+// https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/
+
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int n=s.size();
+        unordered_map<char,int> m;
+        int i=0,j=0;
+        int count=0;
+        m[s[0]]++;
+        
+        do {
+
+            if(m['a']>0 && m['b']>0 && m['c']>0){
+                count += n-j;
+                // cout<<i<<" "<<j<<endl;
+                // cout<<n-j<<endl;
+                m[s[i]]--;
+                i++;
+                
+            }
+
+            else{
+                j++;
+                m[s[j]]++;
+            }
+
+            // cout<<m['a']<<" "<<m['b']<<" "<<m['c']<<endl;
+            // cout<<i<<"-"<<j<<endl;
+        } while(i<j && j<n);
+
+        return count;
+    }
+};
+
+// https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/submissions/871152905/
