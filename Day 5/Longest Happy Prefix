@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/longest-happy-prefix/description/
+
+class Solution {
+public:
+    string longestPrefix(string s) {
+        int n=s.size();
+        vector<int> v(n);
+        v[0]=0;
+        int i=0,j=1;
+        while(i<j && j<n)
+        {
+            // cout<<i<<" "<<j<<endl;
+            if(s[i]==s[j]) { 
+                v[j]=i+1;
+                i++; j++;
+            }
+            else{
+                if(i!=0) i=v[i-1];
+                else{
+                    v[j]=i;
+                    j++; 
+                }
+                // if(s[i]==s[j]) v[j]=i+1;
+            }
+
+        }
+        // for(int i=0;i<n;i++) cout<<s[i]<<" ";
+        // cout<<endl;
+        // for(int i=0;i<n;i++)
+        // {
+        //     cout<<v[i]<<" ";
+        // }
+        // cout<<endl;
+
+        return s.substr(0,v[n-1]);
+    }
+};
+
+// https://leetcode.com/problems/longest-happy-prefix/submissions/871968997/
