@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/factorial-trailing-zeroes/description/
+
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int five=0, two=0, ten=0;
+
+        for(int i=1;i<=n;i++)
+        {
+            string s=to_string(i);
+            // cout<<s.size()<<endl;
+            int sn=s.size();
+            int j;
+            for(j=s.size()-1;j>=0;j--)
+            {
+                if(s[j]!='0')
+                {
+                    break;
+                }
+            }
+            ten+=(sn-j-1);
+            int a=stoi(s.substr(0,j+1)); int b=a;
+            // if(stoi(s.substr(0,j+1))%2==0) two++;
+            // if(stoi(s.substr(0,j+1))%5==0) five++;
+
+            while(b%5==0){ b=b/5; five++; }
+            while(b%2==0){ b=b/2; two++; }
+
+            // cout<<stoi(s.substr(0,j+1))<<endl;
+            // cout<<i<<" "<<ten<<" "<<five<<" "<<two<<endl;
+        }
+
+        return ten+min(five,two);
+    }
+};
+
+// https://leetcode.com/problems/factorial-trailing-zeroes/submissions/873222662/
