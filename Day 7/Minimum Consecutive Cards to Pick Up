@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/minimum-consecutive-cards-to-pick-up/description/
+
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& c) {
+        
+        unordered_map<int,int> m;
+        int ans=INT_MAX;
+        int n=c.size();
+        for(int i=0;i<n;i++)
+        {
+            if(m[c[i]]!=0)
+            {
+                cout<<i<<" "<<m[c[i]]<<endl;
+                ans=min(ans,i-m[c[i]]+2);
+            }
+            m[c[i]]=i+1;
+        }
+        if(ans==INT_MAX) return -1;
+        else
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/minimum-consecutive-cards-to-pick-up/submissions/873448972/
