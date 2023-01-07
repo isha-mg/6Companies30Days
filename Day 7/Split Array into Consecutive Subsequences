@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/split-array-into-consecutive-subsequences/description/
+
+class Solution {
+public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int,int> freq;
+        unordered_map<int,int> need;
+
+        for(auto a:nums)
+        freq[a]++;
+
+        for(int a:nums)
+        {
+            if(freq[a]==0) continue;
+
+            else if(need[a]>0)
+            {
+                freq[a]--;
+                need[a]--;
+                need[a+1]++;
+            }
+            else if(freq[a]>0 && freq[a+1]>0 && freq[a+2]>0)
+            {
+                freq[a+1]--;
+                freq[a]--;
+                freq[a+2]--;
+                need[a+3]++;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        return true;
+    }
+};
+
+// https://leetcode.com/problems/split-array-into-consecutive-subsequences/submissions/873377717/
