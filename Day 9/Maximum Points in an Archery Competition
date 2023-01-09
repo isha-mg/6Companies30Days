@@ -1,0 +1,76 @@
+// https://leetcode.com/problems/maximum-points-in-an-archery-competition/description/
+
+class Solution {
+public:
+
+    bool ismask(int n, vector<int>& alice, int mask)
+    {
+        int idx=11;
+        int minarrow=0;
+        while(mask>0)
+        {
+            if((mask & 1)==1){
+                minarrow += alice[idx]+1;
+            }
+            mask = mask>>1;
+            idx--;
+        }
+
+        return minarrow <= n;
+    }
+
+    int calcpoints(int mask)
+    {
+        int idx=11;
+        int sum=0;
+        while(mask>0)
+        {
+            if((mask & 1)==1) sum += idx;
+            idx--;
+            mask >>= 1;
+        }
+
+        return sum;
+    }
+    vector<int> maximumBobPoints(int n, vector<int>& alice) {
+        
+        int N=(1 << 12)-1;
+        int sum=0;
+        int a;
+        for(int i=1;i<=N;i++)
+        {
+            if(ismask(n,alice,i))
+            {
+                int p=calcpoints(i);
+                if(p>sum)
+                {
+                    sum=p; a=i;
+                }
+            }
+        }
+
+        vector<int> ans(12);
+        int idx=11;
+        int arrowsum=0;
+
+        while(a>0)
+        {
+            if((a & 1)==1)
+            {
+                ans[idx]=alice[idx]+1;
+                arrowsum += ans[idx];
+            }
+            a=a>>1;
+            idx--;
+        }
+
+        ans[0]=n-arrowsum;
+
+        return ans;
+
+
+
+    }
+};
+
+// https://leetcode.com/problems/maximum-points-in-an-archery-competition/submissions/874559238/
