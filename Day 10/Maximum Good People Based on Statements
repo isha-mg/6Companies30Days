@@ -1,0 +1,51 @@
+// https://leetcode.com/problems/maximum-good-people-based-on-statements/description/
+
+class Solution {
+public:
+
+    bool isValid(int m, vector<vector<int>>& st)
+    {
+        int n=st.size();
+        for(int i=0;i<n;i++)
+        {
+            if(1<<i & m)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    if((st[i][j]==0 && 1<<j & m) || (st[i][j]==1 && !(1<<j & m)))
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    int maximumGood(vector<vector<int>>& st) {
+        
+        int n=st.size();
+        int N=(1<<n);
+        int ans=0;
+        for(int i=1;i<N;i++)
+        {
+            cout<<i<<endl;
+            if(isValid(i,st))
+            {
+                
+                int cnt=0;
+                int m=i;
+                while(m>0)
+                {
+                    if((m & 1)==1)
+                    cnt++;
+                    m = m>>1;
+                }
+
+                ans=max(ans,cnt);
+            }
+        }
+
+        return ans;
+
+    }
+};
+
+// https://leetcode.com/problems/maximum-good-people-based-on-statements/submissions/875631443/
