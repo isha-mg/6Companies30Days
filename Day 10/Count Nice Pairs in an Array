@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/count-nice-pairs-in-an-array/description/
+
+class Solution {
+public:  
+    int countNicePairs(vector<int>& nums) {
+        int n=nums.size();
+        unordered_map<long long int,long long int> m;
+        int mod=1e9+7;
+        for(int i=0;i<n;i++)
+        {
+            string s=to_string(nums[i]);
+            reverse(s.begin(),s.end());
+            m[(nums[i]-stoi(s))]++;
+        }
+        long long sum=0;
+        for(auto a:m)
+        {
+            long long int b=a.second;
+            // cout<<a.first<<" "<<b<<endl;
+            sum+=(b*(b-1))/2;
+            sum=sum%mod;
+
+        }
+        // cout<<sum<<endl;
+        return sum;
+    }
+};
+
+// https://leetcode.com/problems/count-nice-pairs-in-an-array/submissions/875474874/
