@@ -1,0 +1,56 @@
+// https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
+
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        
+        int n=nums.size();
+        vector<int> a,b;
+        int x=nums[0];
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]>x)
+            {
+                x=nums[i];
+            }
+            // cout<<x<<" ";
+            a.push_back(x);
+        }
+        // cout<<endl;
+
+
+        if(nums==a) return 0;
+        // cout<<"--"<<endl;
+        x=nums[n-1];
+        for(int i=n-1;i>=0;i--)
+        {
+            if(nums[i]<x)
+            x=nums[i];
+            // cout<<x<<" ";
+            b.push_back(x);
+        }
+        // cout<<endl;
+        reverse(b.begin(),b.end());
+        int l;
+        for(int i=0;i<n;i++)
+        {
+            if(a[i]!=b[i])
+            {l=i;
+            break;}
+        }
+        // cout<<l<<endl;
+        int r;
+        for(int i=n-1;i>=0;i--)
+        {
+            if(a[i]!=b[i])
+            {
+                r=i;
+                break;
+            }
+        }
+        return r-l+1;
+
+    }
+};
+
+// https://leetcode.com/problems/shortest-unsorted-continuous-subarray/submissions/870729034/
