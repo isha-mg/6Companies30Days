@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/increasing-triplet-subsequence/description/
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int n=nums.size();
+        if(n<3) return false;
+        vector<int> v(n);
+        int m=INT_MIN;
+        for(int i=n-1;i>=0;i--)
+        {
+            m=max(m,nums[i]);
+            v[i]=m;
+        }
+        for(auto x:v) cout<<x<<" ";
+        cout<<endl;
+        m=nums[0];
+        for(int i=1;i<n-1;i++)
+        {
+            if(m<nums[i] && nums[i]<v[i+1])
+            return true;
+
+            m=min(m,nums[i]);
+        }
+        return false;
+    }
+};
+
+// https://leetcode.com/problems/increasing-triplet-subsequence/submissions/876763128/
