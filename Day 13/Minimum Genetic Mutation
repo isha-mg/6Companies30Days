@@ -1,0 +1,84 @@
+// https://leetcode.com/problems/minimum-genetic-mutation/description/
+
+class Solution {
+public:
+    int minMutation(string startWord, string targetWord, vector<string>& wordList) {
+
+        if(wordList.size()==0) return -1;
+        if(startWord==targetWord) return 0;
+        
+                int N=wordList.size();
+        int s=startWord.size();
+        vector<int> s1;
+        unordered_map<string,int> m;
+        int c=0;
+        for(c=0;c<N;c++)
+        {
+            if(startWord==wordList[c])
+            break;
+        }
+        // cout<<"hello"<<endl;
+        bool flag=0;
+        if(c==N) { wordList.push_back(startWord); N++; }
+        for(int i=0;i<N;i++){
+            if(targetWord==wordList[i]) flag=1;
+            m[wordList[i]]=i;
+        }
+        if(flag==0) return -1;
+        vector<vector<int>> adj(N,s1);
+        
+        for(int i=0;i<N;i++)
+        {
+            for(int j=0;j<N;j++)
+            { 
+                if(i!=j)
+                { int count=0;
+                for(int k=0;k<s;k++)
+                {
+                    if(wordList[i][k]!=wordList[j][k])
+                    count++;
+                }
+                if(count==1)
+                    adj[m[wordList[i]]].push_back(m[wordList[j]]);
+                }
+            }
+        }
+        for(int i=0;i<N;i++)
+        {
+            cout<<i<<"->";
+            for(int j=0;j<adj[i].size();j++)
+                cout<<adj[i][j]<<" ";
+            cout<<endl;
+        }
+        vector<bool> vis(N,false);
+        vector<int> ans(N,INT_MAX);
+        queue<int> q;
+        q.push(m[startWord]);
+        ans[m[startWord]]=0;
+        while(!q.empty())
+        {
+            int a=q.front();
+            q.pop();
+            for(int x:adj[a]){
+                if(!vis[x]){
+                    q.push(x);
+                    vis[x]=true;
+                    ans[x]=ans[a]+1;
+                }
+            }
+        }
+
+        // for(int i=0;i<N;i++)
+        // cout<<ans[i]<<" ";
+        // cout<<endl;
+        
+        // cout<<ans[m[targetWord]]<<endl;
+        if(ans[m[targetWord]]!=INT_MAX && ans[m[targetWord]]!=0)
+        return ans[m[targetWord]];
+        else
+        return -1;
+    
+    }
+};
+
+// https://leetcode.com/problems/minimum-genetic-mutation/submissions/877477591/
