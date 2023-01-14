@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/description/
+
+class Solution {
+public:
+    vector<int> f;
+    int helper(int n)
+    {
+        if(n<3) return 0;
+        int x=log2(n);
+        int a=(pow(2,x)+pow(2,x+1))/2;
+        if(n >= a)
+        return f[x]+f[x-1]+n-a+1;
+        return f[x]+helper(n-pow(2,x));
+    }
+    int findIntegers(int n) {
+        f.clear();
+        f.push_back(0); f.push_back(0);
+        int x=1;
+        for(int i=2;pow(2,i)<=n;i++)
+        {
+            f.push_back(f[i-1]+f[i-2]+pow(2,i-2));
+            x=i;
+        }
+        return n-helper(n)+1;
+
+    }
+};
+
+// https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/submissions/877341138/
