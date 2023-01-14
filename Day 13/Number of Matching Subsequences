@@ -1,0 +1,36 @@
+// https://leetcode.com/problems/number-of-matching-subsequences/description/
+
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+        
+        int n=s.size(),count=0;
+        unordered_map<string,int> m1;
+        for(int k=0;k<words.size();k++)
+        {
+            int m=words[k].size();
+            int i=0,j=0;
+            if(m1.count(words[k])) count += m1[words[k]];
+            else{
+                while(i<n && j<m)
+                {
+                    if(s[i]==words[k][j])
+                    {
+                        // cout<<s[i]<<" ";
+                        i++; j++;
+                    }
+                    else i++;
+                }
+
+                // cout<<endl;
+                if(j==m) {
+                    count += m1[words[k]] = 1;  
+                } else m1[words[k]]=0;
+            }
+            // cout<<k<<" "<<count<<endl;
+        }
+        return count;
+    }
+};
+
+// https://leetcode.com/problems/number-of-matching-subsequences/submissions/877467685/
