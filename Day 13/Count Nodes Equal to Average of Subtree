@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/description/
+
+class Solution {
+public:
+
+int ans;
+    pair<long long ,long long> traverse(TreeNode* root)
+    {
+        if(root==NULL) return {0,0};
+        pair<long long, long long> l= traverse(root->left);
+        pair<long long, long long> r= traverse(root->right);
+        
+        if(l.second + r.second == 0)
+        ans++;
+        else if(root->val == ((l.first + r.first + root->val)/(l.second + r.second + 1))){
+        // cout<<root->val<<" "<<(l.first + r.first)/(l.second + r.second)<<endl;
+        ans++;
+        }
+        // else
+        // cout<<root->val<<" "<<(l.first + r.first + root->val)/(l.second + r.second + 1)<<endl;
+
+        return {l.first + r.first + root->val, l.second + r.second +1 };
+
+    }
+    int averageOfSubtree(TreeNode* root) {
+        ans=0;
+        pair<long long ,long long> p=traverse(root);
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/877535527/
