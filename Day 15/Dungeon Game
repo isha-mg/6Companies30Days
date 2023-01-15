@@ -1,0 +1,23 @@
+// https://leetcode.com/problems/dungeon-game/description/
+
+class Solution {
+public:
+    int calculateMinimumHP(vector<vector<int>>& dp) {
+        int n=dp.size(),m=dp[0].size();
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                if(i==n-1 && j==m-1){
+                    dp[i][j]=(dp[i][j]>0?0:dp[i][j]);
+                }
+                else{
+                    dp[i][j]=dp[i][j]+max((i<n-1?dp[i+1][j]:-3e5),(j<m-1?dp[i][j+1]:-3e5));
+                    dp[i][j]=(dp[i][j]>0?0:dp[i][j]);
+                }
+            }
+        }
+        int ans=abs(dp[0][0])+1;
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/dungeon-game/submissions/878760707/
