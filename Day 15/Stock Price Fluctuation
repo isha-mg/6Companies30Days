@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/stock-price-fluctuation/
+
+class StockPrice {
+public:
+
+    set<pair<int,int>> s;
+    int currt=0;
+    unordered_map<int,int> m;
+
+    StockPrice() {
+        s.clear();
+        m.clear();
+    }
+    
+    void update(int timestamp, int price) {
+        currt=max(timestamp,currt);
+
+        if(m.find(timestamp)!=m.end()){
+            s.erase(s.find({m[timestamp],timestamp}));
+        }
+        s.insert({price,timestamp});
+        m[timestamp]=price;
+        // for(auto a:s)
+        // cout<<a.first<<" "<<a.second<<endl;
+        // cout<<(*s.begin()).first<<" "<<(*s.begin()).second<<" * "
+        //     <<(*--s.end()).first<<" "<<(*--s.end()).second<<endl;
+        // cout<<endl;
+        
+    }
+    
+    int current() {
+        return m[currt];
+    }
+    
+    int maximum() {
+        return (*--s.end()).first;
+    }
+    
+    int minimum() {
+        return (*s.begin()).first;
+    }
+};
+
+// https://leetcode.com/problems/stock-price-fluctuation/submissions/878682315/
