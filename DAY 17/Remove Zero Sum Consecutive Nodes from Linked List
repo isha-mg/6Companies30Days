@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/description/
+
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        vector<int> v;
+        ListNode* i=head;
+        int sum=0;
+        while(i!=NULL)
+        {
+            ListNode* j=i->next;
+            ListNode* j1=i;
+            while(j!=NULL)
+            {
+                sum += j->val;
+                if(sum==0)
+                j1->next=j->next;
+
+                j=j->next;
+            }
+            j1=j1->next;
+            i=i->next;
+            sum=0;
+        }
+        i=head;
+        sum=0;
+        while(i!=NULL)
+        {
+            sum += i->val;
+            if(sum==0)
+            {
+                head=i->next;
+                sum=0;
+            }
+
+            i=i->next;
+
+        }
+        return head;
+
+    }
+};
+
+// https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/submissions/879795557/
