@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/closest-prime-numbers-in-range/description/
+
+void SieveOfEratosthenes(int n, vector<bool>& prime){
+    for (int p = 2; p * p <= n; p++) {
+        if (prime[p] == true) {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+}
+
+class Solution {
+public:
+    vector<int> closestPrimes(int l, int r) {
+        vector<bool> prime(r+1,true);
+        SieveOfEratosthenes(r,prime);
+        vector<int> a;
+        vector<int> ans(2,-1);
+        prime[0]=false; prime[1]=false;
+        for (int p = l; p <= r; p++){
+            if (prime[p]){
+                a.push_back(p);
+            }
+        }
+        int diff=INT_MAX;
+        for(int i=1;i<a.size();i++){
+            if(a[i]-a[i-1]<diff){
+                ans[0]=a[i-1]; ans[1]=a[i];
+                diff=a[i]-a[i-1];
+                if(diff==2) break;
+            }
+        }
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/closest-prime-numbers-in-range/submissions/880300608/
