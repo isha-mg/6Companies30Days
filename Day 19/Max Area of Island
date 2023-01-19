@@ -1,0 +1,45 @@
+// https://leetcode.com/problems/max-area-of-island/description/
+
+class Solution {
+public:
+    void traverse(int x,int y,vector<vector<int>>& adj,int& count)
+    {
+        int n=adj.size();
+        int m=adj[0].size();
+        count++;
+        adj[x][y]=0;
+        if(x+1<n && adj[x+1][y]==1)
+        traverse(x+1,y,adj,count);
+
+        if(x-1>=0 && adj[x-1][y]==1)
+        traverse(x-1,y,adj,count);
+
+        if(y+1<m && adj[x][y+1]==1)
+        traverse(x,y+1,adj,count);
+
+        if(y-1>=0 && adj[x][y-1]==1)
+        traverse(x,y-1,adj,count);
+    }
+    int maxAreaOfIsland(vector<vector<int>>& adj) {
+        
+        int n=adj.size();
+        int m=adj[0].size();
+        int maxi=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            if(adj[i][j]==1)
+            {
+                int count=0;
+                vector<int> s;
+                traverse(i,j,adj,count);
+                cout<<i<<"-"<<j<<" "<<count<<endl;
+                maxi=max(maxi,count);
+            }
+        }
+
+        return maxi;
+    }
+};
+
+// https://leetcode.com/problems/max-area-of-island/submissions/881137132/
