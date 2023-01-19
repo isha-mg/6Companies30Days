@@ -1,0 +1,40 @@
+// https://leetcode.com/problems/distant-barcodes/description/
+
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& bc) {
+
+        int N=bc.size();
+        if(N<3) return bc;
+        unordered_map<int,int> M;
+        for(int i=0;i<N;i++)
+        {
+            M[bc[i]]++;
+        }
+        priority_queue<pair<int,int>> q;
+        for(auto x:M)
+        {
+            // cout<<x.second<<" "<<x.first<<endl;
+            q.push({x.second,x.first});
+        }
+
+        vector<int> ans;
+        
+        while(q.top().first>0){
+            int n=q.top().first, el1=q.top().second; q.pop();
+            int m=q.top().first, el2=q.top().second; q.pop();
+            
+            ans.push_back(el1); n--;
+            if(m>0)
+            ans.push_back(el2); m--;
+
+            q.push({n,el1});
+            q.push({m,el2});
+        }
+
+        return ans;
+    }
+
+};
+
+// https://leetcode.com/problems/distant-barcodes/submissions/881100053/
