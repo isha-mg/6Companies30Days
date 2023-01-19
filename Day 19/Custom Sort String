@@ -1,0 +1,31 @@
+// https://leetcode.com/problems/custom-sort-string/description/
+
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        
+        unordered_map<char,char> m;
+        for(int i=0;i<order.size();i++)
+        {
+            m[order[i]]=(char)(i+48);
+        }
+        string b="";
+        vector<char> c;
+        for(int i=0;i<s.size();i++)
+        {
+            if(m.find(s[i])!=m.end())
+            c.push_back(m[s[i]]);
+            else
+            b += s[i];
+        }
+        sort(c.begin(),c.end());
+        string d="";
+        for(int i=0;i<c.size();i++)
+        {
+            d += order[(int)(c[i]-48)];
+        }
+        return d+b;
+    }
+};
+
+// https://leetcode.com/problems/custom-sort-string/submissions/881147777/
