@@ -1,0 +1,58 @@
+// https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/description/
+
+typedef pair<int, int> pi;
+
+bool cmp(pair<int,int> a, pair<int,int> b)
+{
+    if(a.first==b.first) return a.second > b.second;
+    return a.first<b.first;
+}
+
+class Solution {
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int dTh) {
+
+        vector<vector<pair<int,int>>> adj(n);
+        for(int i=0;i<edges.size();i++)
+        {
+            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
+            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
+        }
+        vector<pair<int,int>> ans;
+        
+        for(int des=0;des<n;des++){
+
+            priority_queue<pi, vector<pi>, greater<pi> > q;
+            vector<int> dis(n+1,INT_MAX);
+            dis[des]=0;
+            q.push({0,des});
+            while(!q.empty())
+            {
+                int d=q.top().first, node=q.top().second;
+                q.pop();
+                for(auto a:adj[node])
+                {
+                    if(a.second+d<dis[a.first])
+                    {
+                        dis[a.first]=a.second+d;
+                        q.push({dis[a.first],a.first});
+                    }
+                }
+            }
+            int c=0;
+            for(int i=0;i<n;i++){
+            // cout<<dis[i]<<" ";
+            if(i!=des && dis[i]<=dTh) c++;
+            }
+            ans.push_back({c,des});
+            // cout<<endl;
+        }
+
+        sort(ans.begin(),ans.end(),cmp);
+
+
+        return ans[0].second;
+    }
+};
+
+// https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/submissions/881739144/
