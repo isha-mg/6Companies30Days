@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/k-divisible-elements-subarrays/description/
+
+class Solution {
+public:
+    int countDistinct(vector<int>& nums, int k, int p) {
+        
+        int m=0,n=nums.size();
+        vector<pair<int,int>> v;
+        int i=0,j=0;
+        while(i<=j && i<n)
+        {
+            if(j<n && (m<k || (m==k && nums[j]%p!=0)))
+            {
+                if(nums[j]%p==0) m++;
+                if(m>=0) v.push_back({i,j});
+                j++;
+            }
+            else{
+                i++; j=i; m=0;
+            }
+        }
+        unordered_set<string> s;
+        string a="";
+
+        for(int i=0;i<n;i++)
+            a=a+(char)(nums[i]+48);
+
+        for(auto x:v)
+            s.insert(a.substr(x.first,x.second-x.first+1));
+
+        return s.size();
+    }
+};
+
+// https://leetcode.com/problems/k-divisible-elements-subarrays/submissions/883599903/
