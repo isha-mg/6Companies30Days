@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/matrix-block-sum/description/
+
+class Solution {
+public:
+    vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int k) {
+        int n=mat.size();
+        int m=mat[0].size();
+        int sum=0;
+        vector<vector<int>> v(n);
+        if(k>m && k>n) k=max(m,n);
+        // cout<<sum<<" ";
+        for(int i=0;i<n;i++)
+        {
+            sum=0;
+            for(int r=i-k;r<=i+k;r++)
+            {
+                for(int s=-k;s<=k;s++){
+                    if(r>=0 && s>=0 && r<n && s<m){
+                        // cout<<r<<" "<<s<<endl;
+                        sum += mat[r][s];
+                    }
+                }
+            }
+            for(int j=0;j<m;j++)
+            {
+                if(j==0) {
+                    v[i].push_back(sum); 
+                    // cout<<sum<<" ";
+                    continue;
+                }
+                if(j-k-1>=0)
+                {
+                    int r=i-k,s=j-k-1;
+                    while(r<=i+k)
+                    {
+                        if(r>=0 && r<n)
+                        sum -= mat[r][s];
+                        r++;
+                    }
+                }
+                if(j+k<m)
+                {
+                    int r=i-k,s=j+k;
+                    while(r<=i+k)
+                    {
+                        if(r>=0 && r<n)
+                        sum += mat[r][s];
+                        // cout<<r<<"*"<<sum<<endl;
+                        r++;
+                    }
+                }
+                v[i].push_back(sum);
+                // cout<<sum<<" ";
+            }
+            // cout<<endl;
+        }
+
+        return v;
+    }
+};
+
+// https://leetcode.com/problems/matrix-block-sum/submissions/883821547/
