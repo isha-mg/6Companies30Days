@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/maximum-number-of-coins-you-can-get/description/
+
+class Solution {
+public:
+    int maxCoins(vector<int>& piles) {
+        // return 0;
+        int n=piles.size(),sum=0;
+        int j=n-2;
+        sort(piles.begin(),piles.end());
+        for(int i=0;i<n/3;i++)
+        {
+            sum += piles[j];
+            // cout<<piles[j]<<endl;
+            j -= 2;
+        }
+        return sum;
+    }
+};
+
+// https://leetcode.com/problems/maximum-number-of-coins-you-can-get/submissions/883635862/
