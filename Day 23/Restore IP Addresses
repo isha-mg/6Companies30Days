@@ -1,0 +1,40 @@
+// https://leetcode.com/problems/restore-ip-addresses/description/
+
+class Solution {
+public:
+    vector<string> ans;
+    void traverse(int p,int n,string s)
+    {
+        if(n==3)
+        {
+            if(p+1<s.size())
+            {
+                string b=s.substr(p+1,n-p-1);
+                if(((stoi(b)==0 && b.size()==1) || b[0]!='0') && stoi(b)<=255)
+                ans.push_back(s);
+            }
+            return;
+        }
+        
+        string a="",b="";
+        a += s.substr(0,p+1);
+        // cout<<p<<" "<<a<<endl;
+        for(int i=p+1;i<p+4 && i<s.size();i++)
+        {
+            b=b+s[i];
+            // cout<<i<<"-"<<b<<endl;
+            if((stoi(b)==0 && b.size()==1) || b[0]!='0')
+            if(stoi(b)<=255){
+                // cout<<n+1<<" "<<a+b+"."+s.substr(i+1,n-i-1)<<endl;
+                traverse(i+1,n+1,a+b+"."+s.substr(i+1,n-i-1)); 
+            }
+        }
+    }
+    vector<string> restoreIpAddresses(string s) {
+        if(s.size()<4 || s.size()>12) return ans;
+        traverse(-1,0,s);
+        return ans;
+    }
+};
+
+// https://leetcode.com/problems/restore-ip-addresses/submissions/883888633/
