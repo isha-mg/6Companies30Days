@@ -1,0 +1,46 @@
+// https://leetcode.com/problems/swim-in-rising-water/description/
+
+class Solution {
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        
+        int n=grid.size();
+
+        priority_queue<pair<int,pair<int,int>>> q;
+        vector<vector<int>> maxtime(n, vector<int>(n,INT_MAX));
+        maxtime[0][0]=grid[0][0];
+
+        q.push({grid[0][0],{0,0}});
+        while(!q.empty())
+        {
+            int val=q.top().first;
+            int x=q.top().second.first;
+            int y=q.top().second.second;
+            q.pop();
+            if(x+1<n && max(val,grid[x+1][y])<maxtime[x+1][y])
+            {
+                maxtime[x+1][y]=max(val,grid[x+1][y]);
+                q.push({maxtime[x+1][y],{x+1,y}});
+            }
+            if(x-1>=0 && max(val,grid[x-1][y])<maxtime[x-1][y])
+            {
+                maxtime[x-1][y]=max(val,grid[x-1][y]);
+                q.push({maxtime[x-1][y],{x-1,y}});
+            }
+            if(y+1<n && max(val,grid[x][y+1])<maxtime[x][y+1])
+            {
+                maxtime[x][y+1]=max(val,grid[x][y+1]);
+                q.push({maxtime[x][y+1],{x,y+1}});
+            }
+            if(y-1>=0 && max(val,grid[x][y-1])<maxtime[x][y-1])
+            {
+                maxtime[x][y-1]=max(val,grid[x][y-1]);
+                q.push({maxtime[x][y-1],{x,y-1}});
+            }
+        }
+
+        return maxtime[n-1][n-1];
+    }
+};
+
+// https://leetcode.com/problems/swim-in-rising-water/submissions/885101408/
