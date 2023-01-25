@@ -1,0 +1,40 @@
+// https://leetcode.com/problems/strictly-palindromic-number/description/
+
+
+class Solution {
+public:
+
+    bool baseB(int n, int b)
+    {
+        vector<int> num;
+        int i = 0;
+        while (n > 0) {
+            num.push_back(n % b);
+            n = n / b;
+            i++;
+        }
+    
+        for (int j=0;j<i;j++)
+        {
+            if(num[j]!=num[i-j-1])
+            return false;
+        }
+        return true;
+    }
+    bool isStrictlyPalindromic(int n) {
+        bool ans=true;
+        for(int i=2;i<=n-2;i++)
+        ans = ans & baseB(n,i);
+        return ans;
+    }
+};
+
+class Solution {
+public:
+
+    bool isStrictlyPalindromic(int n) {
+        return false;
+    }
+};
+
+// https://leetcode.com/problems/strictly-palindromic-number/submissions/884145610/
