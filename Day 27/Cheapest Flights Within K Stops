@@ -1,0 +1,43 @@
+// https://leetcode.com/problems/cheapest-flights-within-k-stops/description/
+
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        
+        vector<vector<pair<int,int>>> adj(n,vector<pair<int,int>>());
+        for(auto a:flights)
+        {
+            adj[a[0]].push_back({a[1],a[2]});
+        }
+
+        priority_queue<pair<pair<int,int>,int>> q;
+        q.push({{0,0},src});
+        vector<pair<int,int>> dis(n,{INT_MAX,INT_MAX});
+        dis[src]={0,0};
+
+        while(!q.empty())
+        {
+            int d=q.top().first.first;
+            int s=q.top().first.second;
+            int node=q.top().second;
+            q.pop();
+            for(auto x:adj[node])
+            {
+                // cout<<x.first<<endl;
+                if((s+1<=k+1 && d+x.second<dis[x.first].first) ||
+                   (d+x.second==dis[x.first].first) && dis[x.first].second>s+1)
+                   {
+                       dis[x.first]={d+x.second,s+1};
+                       q.push({dis[x.first],x.first});
+                   }
+            }
+        }
+
+        if(dis[dst].first!=INT_MAX && dis[dst].second-1<=k)
+        return dis[dst].first;
+        else return -1;
+
+    }
+};
+
+// https://leetcode.com/problems/cheapest-flights-within-k-stops/submissions/886287716/
