@@ -1,0 +1,40 @@
+// https://leetcode.com/problems/tweet-counts-per-frequency/description/
+
+class TweetCounts {
+public:
+    unordered_map<string,vector<int>> m;
+    TweetCounts() {
+        
+    }
+    
+    void recordTweet(string tweetName, int time) {
+        m[tweetName].push_back(time);
+    }
+    
+    vector<int> getTweetCountsPerFrequency(string freq, string tweet, int start, int end) {
+        int a;
+        if(freq=="minute") a=60;
+        if(freq=="hour") a=3600;
+        if(freq=="day") a=86400;
+        vector<int> ans(((end-start)/a)+1,0);
+
+        // cout<<ans.size()<<endl;
+        for(int x:m[tweet])
+        {
+            // cout<<(x-start)/a<<" ";
+            if(x>=start && x<=end)
+            ans[(x-start)/a]++;
+        }
+        // cout<<endl;
+        return ans;
+    }
+};
+
+/**
+ * Your TweetCounts object will be instantiated and called as such:
+ * TweetCounts* obj = new TweetCounts();
+ * obj->recordTweet(tweetName,time);
+ * vector<int> param_2 = obj->getTweetCountsPerFrequency(freq,tweetName,startTime,endTime);
+ */
+ 
+ // https://leetcode.com/problems/tweet-counts-per-frequency/submissions/886347006/
