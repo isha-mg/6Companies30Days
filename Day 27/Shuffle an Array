@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/shuffle-an-array/description/
+
+class Solution {
+public:
+    vector<int> s;
+    vector<int> n;
+    Solution(vector<int>& nums) {
+        n=nums;
+        s=nums;
+    }
+    
+    vector<int> reset() {
+        return n;
+    }
+    
+    vector<int> shuffle() {
+        int m=n.size();
+        int i=rand()%m;
+        int j=rand()%m;
+
+        int temp=s[i];
+        s[i]=s[j];
+        s[j]=temp;
+        return s;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
+ 
+ // https://leetcode.com/problems/shuffle-an-array/submissions/886148014/
